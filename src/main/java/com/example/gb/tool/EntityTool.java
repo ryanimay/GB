@@ -9,8 +9,6 @@ import org.springframework.core.env.Environment;
 import java.io.File;
 import java.io.FileWriter;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * packageName和import要自己加
@@ -18,7 +16,7 @@ import java.util.List;
  */
 @SpringBootApplication
 public class EntityTool implements CommandLineRunner {
-    private final String tableName = "administrator";
+    private final String tableName = "trans_record";
     //entity輸出路徑+名稱
     private String path = "C:\\Users\\user\\Desktop\\bean\\" + upperFirstChar(rename(tableName)) + ".java";
     private String url;
@@ -122,7 +120,7 @@ public class EntityTool implements CommandLineRunner {
         return switch (type.toUpperCase()) {
             case "INT" -> "Integer";
             case "DOUBLE" -> "Double";
-            case "DATETIME" -> "Data";
+            case "DATETIME" -> "Date";
             default -> "String";
         };
     }
