@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class TransRecordService {
-    @Autowired
     private TransRecordRepository mapper;
+    @Autowired
+    public TransRecordService(TransRecordRepository mapper){
+        this.mapper = mapper;
+    }
 }

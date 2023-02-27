@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class BetRecordService {
-    @Autowired
     private BetRecordRepository mapper;
+    @Autowired
+    public BetRecordService(BetRecordRepository mapper){
+        this.mapper = mapper;
+    }
 }

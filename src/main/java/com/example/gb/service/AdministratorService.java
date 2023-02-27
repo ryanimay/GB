@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class AdministratorService {
-    @Autowired
     private AdministratorRepository mapper;
+    @Autowired
+    public AdministratorService(AdministratorRepository mapper){
+        this.mapper = mapper;
+    }
 }

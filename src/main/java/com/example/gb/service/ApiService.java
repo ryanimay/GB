@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class ApiService {
-    @Autowired
     private ApiRepository mapper;
+    @Autowired
+    public ApiService(ApiRepository mapper){
+        this.mapper = mapper;
+    }
 }
