@@ -1,4 +1,4 @@
-package com.example.gb.model;
+package com.example.gb.model.po;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.util.Date;
-
 
 @Entity
 @Table(name="trans_record")

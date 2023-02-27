@@ -1,12 +1,12 @@
-package com.example.gb.model;
+package com.example.gb.model.po;
 
 import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
-@Table(name = "admin")
-public class Admin {
+@Table(name = "administrator")
+public class Administrator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -21,8 +21,6 @@ public class Admin {
     private Date createTime;
     @Column(name = "create_user")
     private String createUser;
-    @Column(name = "balance")
-    private Double balance;
 
     public Integer getId() {
         return id;
@@ -70,13 +68,5 @@ public class Admin {
 
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
     }
 }
