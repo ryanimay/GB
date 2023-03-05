@@ -1,6 +1,8 @@
 package com.example.gb.model.po;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 
@@ -12,8 +14,11 @@ public class Administrator {
     @Column(name = "id")
     private Integer id;
     @Column(name = "account")
+    @NotBlank(message = "用户名不能為空")
     private String account;
     @Column(name = "password")
+    @NotBlank(message = "密碼不能為空")
+    @Size(min = 8, max = 16, message = "密碼長度必須在8到16之間")
     private String password;
     @Column(name = "last_login_time")
     private Date lastLoginTime;
@@ -21,6 +26,16 @@ public class Administrator {
     private Date createTime;
     @Column(name = "create_user")
     private String createUser;
+    @Column(name = "salt")
+    private String salt;
+
+    public Administrator() {
+    }
+
+    public Administrator(String account, String password) {
+        this.account = account;
+        this.password = password;
+    }
 
     public Integer getId() {
         return id;
@@ -68,5 +83,13 @@ public class Administrator {
 
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

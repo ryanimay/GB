@@ -2,8 +2,6 @@ package com.example.gb.tool;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 
 import java.io.File;
@@ -15,7 +13,7 @@ import java.sql.*;
  * packageName和import要自己加
  * 20230226
  */
-@SpringBootApplication
+//@SpringBootApplication
 public class EntityTool implements CommandLineRunner {
     private final String tableName = "admin";
     //entity輸出路徑+名稱
@@ -30,9 +28,9 @@ public class EntityTool implements CommandLineRunner {
     @Autowired
     private Environment env;
 
-    public static void main(String[] args) {
-        SpringApplication.run(EntityTool.class, args);
-    }
+//    public static void main(String[] args) {
+//        SpringApplication.run(EntityTool.class, args);
+//    }
 
     @Override
     public void run(String... args) throws Exception {
