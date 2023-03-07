@@ -1,10 +1,13 @@
 package com.example.gb.service.shiro;
 
+import com.example.gb.model.po.Administrator;
 import com.example.gb.service.AdministratorService;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,21 +28,31 @@ public class ShiroRealm extends AuthorizingRealm {
         adminRoles.add("admin");
         adminPermission.add("admin");
     }
+    private final AdministratorService administratorService;
+    private final HashedCredentialsMatcher hashedCredentialsMatcher;
 
     @Autowired
-    AdministratorService administratorService;
+    public ShiroRealm(AdministratorService administratorService, HashedCredentialsMatcher hashedCredentialsMatcher){
+        this.administratorService = administratorService;
+        this.hashedCredentialsMatcher = hashedCredentialsMatcher;
+    }
 
+    /**
+     * 權限
+     * */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         return null;
     }
 
+    /**
+     * 登入驗證
+     * */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String account = (String) authenticationToken.getPrincipal();
-        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo();
-        if (account == null)
-            throw new UnknownAccountException("用户名不能为空");
-        return null;
+        if (account == null) throw new UnknownAccountException("用戶名不能為空");
+        Administrator administrator = administratorService.findByAccount(account);
+        return new SimpleAuthenticationInfo(administrator.getAccount(), administrator.getPassword(), ByteSource.Util.bytes(administrator.getSalt()), getName());
     }
 }

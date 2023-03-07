@@ -4,7 +4,9 @@ public enum ResultEnum {
     SUCCESS(0, "Success", true),
     ERROR(1, "Somethings wrong", false),
     INVALID_PARAMS(2, "InValid Params", false),
-    NAME_EXISTS(3, "Name already exists", false);
+    NAME_EXISTS(3, "Name already exists", false),
+    ACCOUNT_NOT_EXISTS(4, "Account not exists", false),
+    WRONG_PASSWORD(5, "Wrong password", false),;
 
     private final Integer code;
     private final String message;

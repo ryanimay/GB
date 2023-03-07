@@ -5,11 +5,11 @@ import com.example.gb.model.Enum.ResultEnum;
 import com.example.gb.model.Router;
 import com.example.gb.model.po.Administrator;
 import com.example.gb.service.AdministratorService;
-import com.example.gb.service.shiro.ShiroRealm;
 import jakarta.validation.Valid;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -23,8 +23,11 @@ import java.util.Objects;
 @RestController
 public class AdministratorController {
 
+    private final AdministratorService administratorService;
     @Autowired
-    private AdministratorService administratorService;
+    public AdministratorController(AdministratorService administratorService){
+        this.administratorService = administratorService;
+    }
 
     @PostMapping(Router.Administrator.REGISTER)
     public BaseResult register(@Valid @RequestBody Administrator administrator, BindingResult bindingResult) {
@@ -41,26 +44,30 @@ public class AdministratorController {
             administrator = administratorService.insert(administrator);
             success.setData(administrator);
         }catch(Exception e){
-            BaseResult error = BaseResult.error(ResultEnum.ERROR);
-            error.setData(e.getMessage());
-            return error;
+            return BaseResult.error(ResultEnum.ERROR, e);
         }
         return success;
     }
 
-    @GetMapping(Router.Administrator.LOGIN)
+    @PostMapping(Router.Administrator.LOGIN)
     public BaseResult login(@RequestBody Administrator administrator) {
-        DefaultSecurityManager securityManager = new DefaultSecurityManager();
-        securityManager.setRealm(new ShiroRealm());
-        SecurityUtils.setSecurityManager(securityManager);
-
-
+        UsernamePasswordToken token = new UsernamePasswordToken(administrator.getAccount(), administrator.getPassword());
         Subject subject = SecurityUtils.getSubject();
-        if (!subject.isAuthenticated()) {
-            UsernamePasswordToken token = new UsernamePasswordToken();
-
+        try{
+            subject.login(token);
+        }catch (UnknownAccountException e) {
+            return BaseResult.error(ResultEnum.ACCOUNT_NOT_EXISTS, e);
+        } catch (IncorrectCredentialsException e) {
+            return BaseResult.error(ResultEnum.WRONG_PASSWORD, e);
         }
-        return null;
+        return BaseResult.success();
+    }
+
+    @PostMapping(Router.Administrator.LOGOUT)
+    public BaseResult logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return BaseResult.success();
     }
 
     @GetMapping(Router.Administrator.ADMINISTRATOR)

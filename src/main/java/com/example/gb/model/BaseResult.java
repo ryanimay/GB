@@ -55,4 +55,13 @@ public class BaseResult {
         baseResult.setSuccess(resultEnum.getSuccess());
         return baseResult;
     }
+
+    public static BaseResult error(ResultEnum resultEnum, Exception e){
+        BaseResult baseResult = new BaseResult();
+        baseResult.setCode(resultEnum.getCode());
+        baseResult.setMessage(resultEnum.getMessage());
+        baseResult.setSuccess(resultEnum.getSuccess());
+        baseResult.setData(e.getMessage());
+        return baseResult;
+    }
 }

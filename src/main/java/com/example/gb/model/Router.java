@@ -5,6 +5,7 @@ public interface Router {
         String ADMINISTRATOR = "/administrator";
         String REGISTER = ADMINISTRATOR + "/register";
         String LOGIN = ADMINISTRATOR + "/login";
+        String LOGOUT = ADMINISTRATOR + "/logout";
     };
     interface Admin{
         String ADMIN = "/admin";
