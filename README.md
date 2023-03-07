@@ -29,5 +29,5 @@ Vue.js(front-end)
 
 20230226 - docker起mariadb，完成db結構創建  
 20230228 - 簡易Entity創建工具，並建完相關bean/service  
-20230306 - 後臺註冊接口+測試
+20230306 - 後臺註冊接口+測試  
 20230306 - Shiro登入(未測試)
